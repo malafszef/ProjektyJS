@@ -1,0 +1,3 @@
+
+let liczba = prompt("Podaj liczbe: ")
+alert(liczba % 2 === 0 ? "Parzysta" : "Nieparzysta");
