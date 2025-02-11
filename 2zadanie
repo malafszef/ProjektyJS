@@ -1,0 +1,14 @@
+
+ 
+let liczba = prompt("Podaj liczbe: ")
+if ((liczba >5 && liczba !== 6 && liczba !== 12) || liczba == 0){
+alert("Liczba spełnia warunek.") ;  
+else{
+alert("Liczba nie spelnia warunku");
+}
+}
+
+
+
+
+
