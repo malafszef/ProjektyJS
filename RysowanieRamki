@@ -1,0 +1,26 @@
+//wprowadzenie danych
+let wysokosc = Number(prompt("Podaj wysokosc:"));
+let szerokosc = Number(prompt("Podaj szerokosc:"));
+
+
+//gorna ramka
+let gornaLinia = "";
+for(let i=0;i < szerokosc;i++){
+    gornaLinia = gornaLinia + "*";
+}
+console.log(gornaLinia);
+
+//srodkowe linie
+for(let i=0; i < wysokosc - 2; i++){
+    let srodek = "*"; //lewa krawedz
+    for(let j=0; i < szerokosc - 2; j++){
+        srodek = srodek + "*";
+}
+srodek = srodek + "*" //prawa krawedz
+console.log(srodek);
+}
+ if (wysokosc > 1){
+     console.log(gornaLinia);
+ }   
+
+
