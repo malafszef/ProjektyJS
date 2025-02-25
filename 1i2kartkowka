@@ -1,0 +1,18 @@
+// Program 1 - Sprawdzanie przedziału z wprowadzaniem liczby
+let a = Number(prompt("Podaj liczbę: "));
+
+if (a >= 100 && a < 200) {
+    console.log("Liczba " + a + " zawiera się w przedziale <100, 200)");
+} else {
+    console.log("Liczba " + a + " nie zawiera się w przedziale <100, 200)");
+}
+
+// Program 2 - Liczby parzyste (bez zmian, bo nie wymaga wprowadzania danych)
+let liczba = 1;
+
+while (liczba <= 100) {
+    if (liczba % 2 === 0) {
+        console.log(liczba);
+    }
+    liczba++;
+}
