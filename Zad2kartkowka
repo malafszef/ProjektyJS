@@ -1,0 +1,8 @@
+let liczba = 1;
+
+while (liczba <= 100) {
+    if (liczba % 2 === 0) {
+        console.log(liczba);
+    }
+    liczba++;
+}
