@@ -1,0 +1,7 @@
+let a = 150; // Możesz zmienić tę wartość na dowolną liczbę
+
+if (a >= 100 && a < 200) {
+    console.log("Liczba " + a + " zawiera się w przedziale <100, 200)");
+} else {
+    console.log("Liczba " + a + " nie zawiera się w przedziale <100, 200)");
+}
