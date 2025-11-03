@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Zdrowia i Plan Dnia</title>
+    
+</head>
+<style>
+   
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    gap: 30px; 
+}
+
+form {
+    border: 1px solid black; 
+    padding: 15px;
+    border-radius: 4px;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-right: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: lightgray;
+    border: 1px solid gray;
+}
+
+
+.result {
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 5px;
+}
+
+.error {
+    color: red; 
+    font-style: italic;
+}
+
+.red-text { 
+    color: red; 
+}
+.orange-text { 
+    color: orange; 
+}
+.green-text { 
+    color: green; 
+}
+
+
+.yellow-bg { 
+    background-color: yellow; 
+}
+.blue-bg { 
+    background-color: blue; 
+    color: white; 
+}
+.green-bg { 
+    background-color: green; 
+    color: white; 
+}
+</style>
+<body>
+
+<form id="healthCalculator">
+    <h3> Kalkulator Punktów Zdrowego Stylu Życia</h3>
+    <div>
+        <label for="sleep">Liczba godzin snu (min. 1h):</label>
+        <input type="number" id="sleep" name="sleep" min="1" required>
+    </div>
+    <div>
+        <label for="water">Liczba szklanek wypitej wody (min. 1):</label>
+        <input type="number" id="water" name="water" min="1" required>
+    </div>
+    <div>
+        <input type="checkbox" id="sport" name="sport">
+        <label for="sport">Czy uprawiał(a) dziś sport?</label>
+    </div>
+    <button type="submit">Oblicz wynik</button>
+    <p id="healthError" class="error"></p>
+    <p id="healthResult" class="result"></p>
+</form>
+
+<form id="dayPlanner">
+    <h3>Generator Planu Dnia</h3>
+    <div>
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <h4>Pora Dnia:</h4>
+        <input type="radio" id="morning" name="timeOfDay" value="Rano" required>
+        <label for="morning">Rano</label>
+        <input type="radio" id="noon" name="timeOfDay" value="Południe">
+        <label for="noon">Południe</label>
+        <input type="radio" id="evening" name="timeOfDay" value="Wieczór">
+        <label for="evening">Wieczór</label>
+    </div>
+    <div>
+        <h4>Aktywności:</h4>
+        <input type="checkbox" id="activity1" name="activities" value="Czytanie">
+        <label for="activity1">Czytanie</label>
+        <input type="checkbox" id="activity2" name="activities" value="Spacer">
+        <label for="activity2">Spacer</label>
+        <input type="checkbox" id="activity3" name="activities" value="Nauka">
+        <label for="activity3">Nauka</label>
+        <input type="checkbox" id="activity4" name="activities" value="Odpoczynek">
+        <label for="activity4">Odpoczynek</label>
+    </div>
+    <button type="submit">Utwórz plan</button>
+    <p id="planError" class="error"></p>
+    <p id="planResult" class="result"></p>
+</form>
+
+<script>
+    // Zadanie 1
+    const healthForm = document.querySelector('#healthCalculator');
+    const healthResult = document.querySelector('#healthResult');
+    const healthError = document.querySelector('#healthError');
+
+    healthForm.addEventListener('submit', function(event) {
+        
+        event.preventDefault();
+
+        const sleep = parseInt(document.querySelector('#sleep').value);
+        const water = parseInt(document.querySelector('#water').value);
+        const sport = document.querySelector('#sport').checked;
+
+        healthResult.textContent = '';
+        healthResult.className = 'result';
+        healthError.textContent = '';
+
+       
+        if (isNaN(sleep) || sleep <= 0 || isNaN(water) || water <= 0) {
+            healthError.textContent = 'Błąd: Wypełnij oba pola liczbami większymi niż 0.';
+            return;
+        }
+
+        let score = 0;
+
+        if (sleep > 6) {
+            score += sleep - 6;
+        }
+        if (water > 4) {
+            score += water - 4;
+        }
+
+        if (sport) {
+            score += 3;
+        }
+        healthResult.textContent = `Twój wynik zdrowia: ${score} punktów`;
+
+     
+        let evaluation = '';
+        let colorClass = '';
+
+        if (score >= 7) {
+            evaluation = 'Świetnie dbasz o zdrowie!';
+            colorClass = 'green-text';
+        } else if (score >= 4) {
+            evaluation = 'Nieźle, ale możesz lepiej';
+            colorClass = 'orange-text';
+        } else { 
+            evaluation = 'Zadbaj o siebie!';
+            colorClass = 'red-text';
+        }
+
+        healthResult.textContent += ` (${evaluation})`;
+        healthResult.classList.add(colorClass);
+    });
+
+    // Zadanie 2.
+
+    const planForm = document.querySelector('#dayPlanner');
+    const planResult = document.querySelector('#planResult');
+    const planError = document.querySelector('#planError');
+
+   
+    planForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        planResult.textContent = '';
+        planResult.className = 'result';
+        planError.textContent = '';
+
+       
+        const nameInput = document.querySelector('#name');
+        const selectedTime = document.querySelector('input[name="timeOfDay"]:checked');
+        
+        const selectedActivities = document.querySelectorAll('input[name="activities"]:checked');
+
+        // 1. 
+        if (nameInput.value.trim() === '') {
+            planError.textContent = 'Błąd: Musisz podać imię.';
+            return;
+        }
+
+        // 2.
+        if (!selectedTime) {
+            planError.textContent = 'Błąd: Musisz wybrać porę dnia.';
+            return;
+        }
+        
+        const name = nameInput.value.trim();
+        const timeOfDay = selectedTime.value;
+
+        // 3. 
+        const activities = Array.from(selectedActivities).map(cb => cb.value);
+
+        // 4. 
+        let summaryText = '';
+        let bgColorClass = '';
+
+        // 6. 
+        switch (timeOfDay) {
+            case 'Rano':
+                bgColorClass = 'yellow-bg';
+                break;
+            case 'Południe':
+                bgColorClass = 'blue-bg';
+                break;
+            case 'Wieczór':
+                bgColorClass = 'green-bg';
+                break;
+        }
+
+        if (activities.length === 0) {
+            summaryText = `Brak aktywności – zaplanuj coś ciekawego!`;
+        } else {
+            
+            summaryText = `${name}, twój plan na ${timeOfDay}: ${activities.join(', ')}`;
+        }
+
+        planResult.textContent = summaryText;
+        planResult.classList.add(bgColorClass);
+    });
+</script>
+
+</body>
+</html>
